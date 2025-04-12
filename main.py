@@ -2,6 +2,9 @@ import telebot
 from config import token
 from botlogic import gen_pass
 from botlogic import coin
+import random
+import os
+import requests
 # Замени 'TOKEN' на токен твоего бота
 # Этот токен ты получаешь от BotFather, чтобы бот мог работать
 bot = telebot.TeleBot(token)
@@ -92,6 +95,11 @@ def fun(message):
     bot.reply_to(message,"https://steamcommunity.com/sharedfiles/filedetails/?id=3408062754&searchtext=squid")
 
 
+@bot.message_handler(commands=['csmem'])
+def send_mem(message):    
+    img_name=random.choice(os.listdir('images'))
+    with open(f'images/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
 
 @bot.poll_answer_handler()
 def handle_poll(poll):
